@@ -19,10 +19,10 @@ const LABEL_IMAGES: Record<Grade, string> = {
 
 const LABEL_DESCRIPTIONS: Record<Grade, string> = {
     A: "Very low estimated impact for this session.",
-    B: "Low estimated impact – efficient use of the system.",
-    C: "Moderate impact – consider streamlining your prompts.",
-    D: "High impact – try shorter / fewer prompts where possible.",
-    E: "Very high impact – substantial resource use in this session.",
+    B: "Low estimated impact â€“ efficient use of the system.",
+    C: "Moderate impact â€“ consider streamlining your prompts.",
+    D: "High impact â€“ try shorter / fewer prompts where possible.",
+    E: "Very high impact â€“ substantial resource use in this session.",
 };
 
 export type ImpactLabelCardProps = {
@@ -32,12 +32,6 @@ export type ImpactLabelCardProps = {
     session?: 1 | 2;
 };
 
-/**
- * NOTE ABOUT THE SCORING:
- * -----------------------
- * Right now this uses simple thresholds on sessionTotalWh to assign A–E.
- * TODO: Replace with Vanessa's upgraded equation :).
- */
 function computeGrade(sessionTotalWh?: number | null, latestPromptWh?: number | null): Grade {
     const v = sessionTotalWh ?? latestPromptWh ?? 0;
 
@@ -84,7 +78,13 @@ export default function ImpactLabelCard({
                 </div>
 
                 <div className="impact-details">
-                    <div className="impact-grade-text">Score: {grade}</div>
+                    <div className="impact-grade-row">
+                        <div className="impact-grade-label">Impact score</div>
+                        <div className={`impact-grade-badge impact-grade-${grade}`}>
+                            {grade}
+                        </div>
+                    </div>
+
                     <div className="impact-description">{description}</div>
 
                     <div className="impact-metrics">

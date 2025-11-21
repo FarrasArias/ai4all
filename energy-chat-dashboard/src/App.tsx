@@ -101,7 +101,7 @@ export default function App() {
             setS1TotalWh(sessionTotalWh);
         }
 
-        // Build folder name and save full study bundle via your existing /api/chats/save
+        // Build folder name and save full study bundle via existing /api/chats/save
         const sessionName = `${(study.participantId || "anon").trim()}_s${study.session}`;
 
         await saveStudySession({

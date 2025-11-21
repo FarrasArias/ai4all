@@ -214,24 +214,33 @@ body {
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 10px;
-    height: var(--chat-input-h);
-    align-items: center;
+    /* let it grow with content instead of fixed height */
+    /* height: var(--chat-input-h); */ /* remove or comment out */
+    align-items: flex-end; /* bottom-align button with textarea */
 }
 
 .chat-text {
-    height: 100%;
     width: 100%;
+    /* auto height + min/max for ChatGPT-like behavior */
+    height: auto;
+    min-height: 40px;
+    max-height: 200px;        /* adjust to taste */
+    padding: 8px 12px;
+    line-height: 1.4;
+
     border-radius: 10px;
     border: 1px solid var(--color-border);
     background: var(--input-bg);
     color: var(--input-text);
-    padding: 0 12px;
     outline: none;
+
+    resize: none;             /* user can't drag-resize, we control it */
+    overflow-y: auto;         /* scroll when content exceeds max-height */
 }
 
-    .chat-text:focus {
-        border-color: var(--color-accent);
-    }
+.chat-text:focus {
+    border-color: var(--color-accent);
+}
 
 .chat-send {
     height: 100%;
@@ -245,9 +254,10 @@ body {
     box-shadow: var(--shadow-md);
 }
 
-    .chat-send:hover {
-        filter: brightness(1.05);
-    }
+.chat-send:hover {
+    filter: brightness(1.05);
+}
+
 
 /* Responsive tweak: collapse sidebar at small widths */
 @media (max-width: 900px) {
@@ -568,6 +578,51 @@ body {
     line-height: 1.3;
 }
 
+/* New: big, attention-grabbing score row */
+.impact-grade-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.impact-grade-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    opacity: 0.85;
+}
+
+/* The badge: larger, bolder, strong contrast */
+.impact-grade-badge {
+    font-size: 1.35rem;
+    font-weight: 800;
+    padding: 2px 12px;
+    border-radius: 999px;
+    background: #0f766e; /* teal-ish for the default look */
+    color: #ffffff;
+    box-shadow: 0 0 0 1px rgba(15, 118, 110, 0.35),
+                0 4px 10px rgba(15, 23, 42, 0.22);
+}
+
+/* Optional: tweak per-grade color to reinforce urgency */
+.impact-grade-A {
+    background: #16a34a; /* green */
+}
+.impact-grade-B {
+    background: #22c55e;
+}
+.impact-grade-C {
+    background: #eab308; /* yellow */
+}
+.impact-grade-D {
+    background: #f97316; /* orange */
+}
+.impact-grade-E {
+    background: #ef4444; /* red */
+}
+
 .impact-grade-text {
     font-weight: var(--font-weight-strong);
     margin-bottom: 2px;
@@ -611,4 +666,40 @@ body {
 /* EUI already renders its own panel; no extra chrome needed around it */
 .section-eui .eui-widget.sidebar {
     margin: 0;
+}
+
+/* typing-indicator */
+.typing-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 40px;
+}
+
+/* 👇 this is the important part: display:inline-block */
+.typing-indicator span {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.35);
+  animation: typing-bounce 1.2s infinite ease-in-out;
+}
+
+.typing-indicator span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.typing-indicator span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes typing-bounce {
+  0%, 80%, 100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  40% {
+    transform: translateY(-3px);
+    opacity: 1;
+  }
 }

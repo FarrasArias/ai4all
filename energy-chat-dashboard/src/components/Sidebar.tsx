@@ -56,14 +56,6 @@ export default function Sidebar({
                     />
                 </section>
             )}
-
-            <section className="card section-water">
-                <h2 className="section-title">Current Consumption</h2>
-                <div className="water-figure">
-                    <span className="water-value">{litresWater.toFixed(1)}</span>
-                    <span className="water-unit">L</span>
-                </div>
-            </section>
         </div>
     );
 }
